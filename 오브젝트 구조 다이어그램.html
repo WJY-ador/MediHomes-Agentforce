@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>메디홈즈 Salesforce 오브젝트 구조 다이어그램</title>
+<style>
+  body { margin: 0; padding: 40px; background: #f5f7fa; font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; }
+  h1 { text-align: center; color: #1a365d; margin-bottom: 8px; font-size: 24px; }
+  .subtitle { text-align: center; color: #718096; margin-bottom: 40px; font-size: 14px; }
+  
+  .diagram { position: relative; width: 1100px; margin: 0 auto; height: 820px; }
+  
+  .obj-box {
+    position: absolute;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    overflow: hidden;
+    min-width: 200px;
+  }
+  .obj-header {
+    padding: 10px 16px;
+    font-weight: 700;
+    font-size: 14px;
+    color: #fff;
+  }
+  .obj-body {
+    background: #fff;
+    padding: 10px 16px;
+    font-size: 12px;
+    line-height: 1.8;
+    color: #2d3748;
+  }
+  .obj-body .field { display: flex; justify-content: space-between; gap: 12px; }
+  .obj-body .field .api { color: #667; font-family: monospace; font-size: 11px; }
+  .obj-body .field .label { font-weight: 500; white-space: nowrap; }
+  .obj-body .section { font-weight: 700; color: #4a5568; margin-top: 6px; border-top: 1px solid #e2e8f0; padding-top: 4px; }
+  
+  /* 색상 */
+  .color-account .obj-header { background: #2F5496; }
+  .color-prescription .obj-header { background: #548235; }
+  .color-contract .obj-header { background: #BF8F00; color: #fff; }
+  .color-contact .obj-header { background: #C55A11; }
+  .color-master .obj-header { background: #7030A0; }
+  .color-inspection .obj-header { background: #5B9BD5; }
+  .color-user .obj-header { background: #A5A5A5; }
+  .color-unknown .obj-header { background: #70AD47; }
+
+  /* 관계선용 SVG */
+  svg.lines {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .obj-box { z-index: 1; }
+  
+  .legend {
+    margin: 30px auto 0;
+    width: 1100px;
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: #4a5568;
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-color { width: 14px; height: 14px; border-radius: 3px; }
+  
+  .rel-label {
+    font-size: 11px;
+    fill: #718096;
+    font-family: 'Apple SD Gothic Neo', sans-serif;
+  }
+  
+  .note {
+    margin: 20px auto 0;
+    width: 1100px;
+    background: #fff;
+    border-left: 4px solid #2F5496;
+    padding: 16px 20px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #4a5568;
+    line-height: 1.8;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  .note strong { color: #1a365d; }
+</style>
+</head>
+<body>
+
+<h1>메디홈즈 Salesforce 오브젝트 구조 (추정)</h1>
+<div class="subtitle">Prescription__c 필드 기반 역추적 ERD — 실선: 확인된 Lookup / 점선: 추정 관계</div>
+
+<div class="diagram">
+
+  <!-- SVG 관계선 -->
+  <svg class="lines" viewBox="0 0 1100 820">
+    <!-- Account(환자) → Prescription -->
+    <line x1="255" y1="265" x2="465" y2="310" stroke="#2F5496" stroke-width="2" marker-end="url(#arrow-blue)"/>
+    <text x="340" y="275" class="rel-label">Patient__c</text>
+    
+    <!-- Account(요양기관) → Prescription -->
+    <line x1="255" y1="150" x2="465" y2="290" stroke="#2F5496" stroke-width="2" marker-end="url(#arrow-blue)"/>
+    <text x="310" y="205" class="rel-label">Hospital__c</text>
+    
+    <!-- Contract → Prescription -->
+    <line x1="175" y1="500" x2="465" y2="400" stroke="#BF8F00" stroke-width="2" marker-end="url(#arrow-yellow)"/>
+    <text x="280" y="460" class="rel-label">Contract__c</text>
+    
+    <!-- Contact(주치의) → Prescription -->
+    <line x1="175" y1="660" x2="465" y2="420" stroke="#C55A11" stroke-width="2" marker-end="url(#arrow-orange)"/>
+    <text x="270" y="560" class="rel-label">Doctor__c</text>
+
+    <!-- MarsterMgt → Prescription -->
+    <line x1="850" y1="580" x2="700" y2="440" stroke="#7030A0" stroke-width="2" marker-end="url(#arrow-purple)"/>
+    <text x="770" y="520" class="rel-label">Disease_Name__c</text>
+    
+    <!-- Inspection_History → Prescription -->
+    <line x1="900" y1="310" x2="730" y2="340" stroke="#5B9BD5" stroke-width="2" marker-end="url(#arrow-sky)"/>
+    <text x="790" y="310" class="rel-label">inspection_history__c</text>
+
+    <!-- Prescription Self-reference -->
+    <path d="M 730 280 C 780 220, 820 220, 820 270 C 820 320, 780 320, 730 310" 
+          stroke="#548235" stroke-width="2" fill="none" stroke-dasharray="6,3" marker-end="url(#arrow-green)"/>
+    <text x="790" y="250" class="rel-label">이전/다음 처방</text>
+
+    <!-- Account(환자) → Contract (추정) -->
+    <line x1="140" y1="290" x2="140" y2="470" stroke="#2F5496" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#arrow-blue)"/>
+    <text x="60" y="390" class="rel-label" style="fill:#2F5496">(추정)</text>
+
+    <!-- Account(환자) → Contact 주치의 (추정) -->
+    <line x1="120" y1="290" x2="120" y2="620" stroke="#C55A11" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#arrow-orange)"/>
+    <text x="30" y="480" class="rel-label" style="fill:#C55A11">(추정)</text>
+    
+    <!-- 추정: Asset, Order, Product -->
+    <line x1="600" y1="180" x2="600" y2="260" stroke="#70AD47" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#arrow-unknown)"/>
+    <text x="615" y="210" class="rel-label" style="fill:#70AD47">(추정)</text>
+
+    <!-- Arrow markers -->
+    <defs>
+      <marker id="arrow-blue" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+        <polygon points="0 0, 8 3, 0 6" fill="#2F5496"/>
+      </marker>
+      <marker id="arrow-green" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+        <polygon points="0 0, 8 3, 0 6" fill="#548235"/>
+      </marker>
+      <marker id="arrow-yellow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+        <polygon points="0 0, 8 3, 0 6" fill="#BF8F00"/>
+      </marker>
+      <marker id="arrow-orange" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+        <polygon points="0 0, 8 3, 0 6" fill="#C55A11"/>
+      </marker>
+      <marker id="arrow-purple" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+        <polygon points="0 0, 8 3, 0 6" fill="#7030A0"/>
+      </marker>
+      <marker id="arrow-sky" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+        <polygon points="0 0, 8 3, 0 6" fill="#5B9BD5"/>
+      </marker>
+      <marker id="arrow-unknown" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+        <polygon points="0 0, 8 3, 0 6" fill="#70AD47"/>
+      </marker>
+    </defs>
+  </svg>
+
+  <!-- ==================== 오브젝트 박스들 ==================== -->
+
+  <!-- Account (요양기관) -->
+  <div class="obj-box color-account" style="left: 10px; top: 80px; width: 240px;">
+    <div class="obj-header">Account (요양기관)</div>
+    <div class="obj-body">
+      <div class="field"><span class="label">병원 / 클리닉 / 렌탈업체</span></div>
+      <div class="field"><span class="label">파트너사 정보</span></div>
+      <div class="section">Prescription에서 Hospital__c로 참조</div>
+    </div>
+  </div>
+
+  <!-- Account (환자) -->
+  <div class="obj-box color-account" style="left: 10px; top: 210px; width: 240px;">
+    <div class="obj-header">Account (환자/고객)</div>
+    <div class="obj-body">
+      <div class="field"><span class="label">환자 기본정보</span></div>
+      <div class="field"><span class="label">이름, 생년월일, 연락처</span></div>
+      <div class="field"><span class="label">소속 파트너사</span></div>
+      <div class="section">Prescription에서 Patient__c로 참조</div>
+      <div class="section" style="color:#c53030;">⚠ 필드 미확보</div>
+    </div>
+  </div>
+
+  <!-- Contract -->
+  <div class="obj-box color-contract" style="left: 10px; top: 470px; width: 240px;">
+    <div class="obj-header">Contract__c (계약)</div>
+    <div class="obj-body">
+      <div class="field"><span class="label">보험임대 / 일반임대 구분</span></div>
+      <div class="field"><span class="label">계약 상태, 기간</span></div>
+      <div class="field"><span class="label">본인부담금 정보</span></div>
+      <div class="section" style="color:#c53030;">⚠ 필드 미확보</div>
+    </div>
+  </div>
+
+  <!-- Contact (주치의) -->
+  <div class="obj-box color-contact" style="left: 10px; top: 630px; width: 240px;">
+    <div class="obj-header">Contact (주치의)</div>
+    <div class="obj-body">
+      <div class="field"><span class="label">의사 이름, 소속 병원</span></div>
+      <div class="field"><span class="label">진료과</span></div>
+      <div class="section">Prescription에서 Doctor__c로 참조</div>
+      <div class="section" style="color:#c53030;">⚠ 필드 미확보</div>
+    </div>
+  </div>
+
+  <!-- Prescription__c (중앙) -->
+  <div class="obj-box color-prescription" style="left: 460px; top: 260px; width: 280px;">
+    <div class="obj-header">Prescription__c (처방전) ✅ 확보</div>
+    <div class="obj-body">
+      <div class="section">주요 필드 (67개)</div>
+      <div class="field"><span class="label">처방번호</span><span class="api">Name</span></div>
+      <div class="field"><span class="label">처방시작일</span><span class="api">Start_date__c</span></div>
+      <div class="field"><span class="label">처방만료일</span><span class="api">End_Date__c</span></div>
+      <div class="field"><span class="label">처방상태</span><span class="api">Prescription_Status__c</span></div>
+      <div class="field"><span class="label">하루평균사용시간</span><span class="api">Average_usage_time__c</span></div>
+      <div class="field"><span class="label">순응평가 시작/종료</span><span class="api">Compilance_*__c</span></div>
+      <div class="field"><span class="label">처방종류</span><span class="api">Type_of_prescription__c</span></div>
+      <div class="field"><span class="label">PSG-AHI지수</span><span class="api">AHI_index__c</span></div>
+      <div class="field"><span class="label">처방전 파일</span><span class="api">Prescription_URL__c</span></div>
+      <div class="field"><span class="label">이전/다음 처방</span><span class="api">Self-Lookup</span></div>
+      <div style="text-align:center; color:#667; margin-top:4px; font-size:11px;">... 외 57개 필드</div>
+    </div>
+  </div>
+
+  <!-- MarsterMgt (상병명) -->
+  <div class="obj-box color-master" style="left: 800px; top: 560px; width: 240px;">
+    <div class="obj-header">MarsterMgt__c (상병명 마스터)</div>
+    <div class="obj-body">
+      <div class="field"><span class="label">상병 코드 / 명칭</span></div>
+      <div class="field"><span class="label">질환 분류</span></div>
+      <div class="section">Prescription에서 Disease_Name__c로 참조</div>
+      <div class="section" style="color:#c53030;">⚠ 필드 미확보</div>
+    </div>
+  </div>
+
+  <!-- Inspection_History (점검내역) -->
+  <div class="obj-box color-inspection" style="left: 830px; top: 320px; width: 240px;">
+    <div class="obj-header">Inspection_History__c (점검내역)</div>
+    <div class="obj-body">
+      <div class="field"><span class="label">점검일, 점검 유형</span></div>
+      <div class="field"><span class="label">점검 결과, AS 이력</span></div>
+      <div class="section">Prescription에서 참조</div>
+      <div class="section" style="color:#c53030;">⚠ 필드 미확보</div>
+    </div>
+  </div>
+
+  <!-- 추정 오브젝트: Asset / Order / Product -->
+  <div class="obj-box color-unknown" style="left: 460px; top: 60px; width: 280px;">
+    <div class="obj-header" style="font-size:13px;">📦 Asset / Order / Product (추정 필요)</div>
+    <div class="obj-body">
+      <div class="section" style="color:#c53030;">Agentforce 시나리오 구현에 필수이나 현재 미확보</div>
+      <div class="field"><span class="label">Asset</span><span class="api">기기 시리얼, 모델, 브랜드</span></div>
+      <div class="field"><span class="label">Order</span><span class="api">마스크 구매이력, 소모품 주문</span></div>
+      <div class="field"><span class="label">Product</span><span class="api">제품 정보, 호환 매트릭스</span></div>
+    </div>
+  </div>
+
+  <!-- User -->
+  <div class="obj-box color-user" style="left: 830px; top: 120px; width: 200px;">
+    <div class="obj-header">User (사용자)</div>
+    <div class="obj-body">
+      <div class="field"><span class="label">작성자 / 최종수정자</span></div>
+      <div class="section">시스템 표준 필드</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-color" style="background:#2F5496"></div> Account (계정)</div>
+  <div class="legend-item"><div class="legend-color" style="background:#548235"></div> Prescription (처방전) — 필드 확보 완료</div>
+  <div class="legend-item"><div class="legend-color" style="background:#BF8F00"></div> Contract (계약)</div>
+  <div class="legend-item"><div class="legend-color" style="background:#C55A11"></div> Contact (주치의)</div>
+  <div class="legend-item"><div class="legend-color" style="background:#7030A0"></div> MarsterMgt (상병명)</div>
+  <div class="legend-item"><div class="legend-color" style="background:#5B9BD5"></div> Inspection History (점검)</div>
+  <div class="legend-item"><div class="legend-color" style="background:#70AD47"></div> 추정 필요 오브젝트</div>
+  <div class="legend-item"><div class="legend-color" style="background:#A5A5A5"></div> User (시스템)</div>
+</div>
+</body>
+</html>
