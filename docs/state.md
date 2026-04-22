@@ -47,8 +47,21 @@
   - CustomerSentiment__c 피클리스트 값 수정 + 배포 완료 (긍정/보통/부정/알수없음, Deploy ID: `0AfIg000003C96VKAS`)
   - FLS 전체 프로필 부여 완료 (201/264건)
   - 보고서 9개 설계 확정, 더미 데이터 400건 계획 수립
+- [x] Asset 10개 AccountId 수정 완료 — 환자 계정으로 올바르게 매핑
+- [x] CaseArticle 더미 데이터 20건 생성 완료 (R7 FAQ Top 10용)
+  - Tier 1 (3케이스): 마스크 보험 / 압력 약해짐 / 순응 기간
+  - Tier 2 (2케이스): 기기 점검·수리 / 계약 해지 / 임대료 / 고장 문의
+  - Tier 3 (1케이스): 수면다원검사 / 결제 변경 / 주소 변경
+- [x] 보고서 6개 메타데이터 배포 완료 (`MediHomes_Reports` 폴더)
+  - R1 Agentforce vs 상담사 이관 비율 (Summary, ORIGIN 그룹)
+  - R2 질문 유형별 처리 현황 (Summary, InquiryType + Status 그룹)
+  - R3 제품별 문의량 (Summary, ProductCategory 그룹)
+  - R4 제품별 이관율 (Matrix, ProductCategory × Status)
+  - R8 CSAT 점수 분포 (Summary, CSAT 그룹, Closed 필터)
+  - R9 고객 태도 분포 (Summary, CustomerSentiment 그룹)
+  - R5/R6/R7 → 사람이 Setup UI에서 직접 생성
 - [x] Asset 10개 업데이트 완료
-  - AccountId = Hospital__c = 병원 (`001Ig00000EVgeMIAT`)
+  - AccountId = 환자 계정 (원정연 4개 / 박태원 4개 / 김민준 2개)
   - InstallDate / PurchaseDate / UsageEndDate / Price / Contract__c 모두 채움
   - `02iIg000000tVktIAE` 레즈메드 에어센스10 오토셋 (CPAP) → 원정연
   - `02iIg000000tVkuIAE` 필립스 드림스테이션 오토셋 (CPAP) → 박태원
