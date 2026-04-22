@@ -23,10 +23,20 @@
 - [x] Apex Action 2개 작성 및 배포
   - `MediHomesLookupEmailByNameDOB` — 이름+생년월일 → 이메일/전화 조회
   - `MediHomesOTPSender` — OTP 생성 + 이메일 발송
+- [x] 원정연 데모 데이터 생성
+  - Account: `001Ig00000EVfxUIAT` (기존)
+  - Contract__c 3개: 2024(만료) / 2025(만료) / 2026(활성)
+  - Asset 2개: ResMed AirSense 11 (`02iIg000000tVY3IAM`) / Philips DreamStation 2 (`02iIg000000tVY8IAM`)
+  - 병원 연결: `Hospital__c = 001Ig00000EVgeMIAT` (메디홈즈병원)
+- [x] InspectionHistory__c 커스텀 필드 6개 배포 (Deploy ID: `0AfIg000003C94oKAC`)
+  - Account__c, Asset__c, InspectionDate__c, InspectionType__c, InspectionResult__c, Inspector__c
+  - ⚠️ 데이터 삽입 미완료 → 아래 이슈 로그 참고
 
 ### 진행 중
+- [ ] InspectionHistory__c 데이터 삽입 (이슈 로그 참고)
 - [ ] YouTube 카드 Action (`YoutubeCardAction`) — Enhanced Chat v1 마크다운 방식
 - [ ] S2 데이터 조회 Apex — 처방전 만료일, 순응 기간, Asset 조회
+- [ ] 박태원 데모 데이터 생성 (원정연과 동일한 구조)
 
 ### 미결 / 보류
 - 시나리오 3 상세 구성 → 팀 미팅 후 확정
@@ -70,6 +80,8 @@
 | 2026-04-22 | Opportunity → 처방전 역할 확인 (Prescription__c 없음) | ✅ 확인 |
 | 2026-04-22 | S2 조회용 Apex 작성 | 진행 중 |
 | 2026-04-22 | YouTube 카드 Action 작성 | 진행 중 |
+| 2026-04-22 | InspectionHistory__c SOQL 불가 원인 규명 | 미해결 → 이슈 로그 참고 |
+| 2026-04-22 | 원정연 Account MobilePhone null | Phone(010-6033-5105) 있음. Apex은 Phone 필드 사용 중 — 문제 없음 |
 
 ---
 
@@ -78,3 +90,4 @@
 | 날짜 | 이슈 | 해결 |
 |------|------|------|
 | 2026-04-15 | `sf project deploy quick`가 validate Job 재사용 불가 오류 반환 | `sf project deploy start --source-dir force-app/main/default/lwc/medihomesCommunityBackground --target-org vscodeOrg`로 배포 성공 |
+| 2026-04-22 | InspectionHistory__c 필드 배포 성공했으나 SOQL/Apex에서 `No such column` 오류 | 미해결. 원인: SDO 특수 오브젝트로 EntityDefinition ID = `000000000000000AAA`. FieldDefinition Tooling API에선 필드 조회 가능, UI 레이아웃에도 표시되나 DML/SOQL 불가. 다음 세션에서 REST API 직접 호출 또는 신규 오브젝트 생성 방향으로 시도 필요. |
