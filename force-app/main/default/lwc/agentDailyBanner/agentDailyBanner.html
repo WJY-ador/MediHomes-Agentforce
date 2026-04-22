@@ -1,0 +1,32 @@
+<template>
+    <div class="slds-box slds-box_x-small slds-theme_default banner-wrap">
+        <div class="slds-grid slds-grid_vertical-align-center slds-gutters_small">
+            <div class="slds-col slds-size_1-of-4 banner-item">
+                <lightning-icon icon-name="standard:account" size="small"></lightning-icon>
+                <div class="slds-m-left_x-small">
+                    <p class="slds-text-body_small slds-text-color_weak">환자</p>
+                    <p class="slds-text-heading_small"><strong>{patientName}</strong></p>
+                </div>
+            </div>
+            <div class="slds-col slds-size_1-of-4 banner-item border-left">
+                <lightning-icon icon-name="standard:people" size="small"></lightning-icon>
+                <div class="slds-m-left_x-small">
+                    <p class="slds-text-body_small slds-text-color_weak">환자 상태</p>
+                    <p class="slds-text-heading_small"><strong>{patientStatus}</strong></p>
+                </div>
+            </div>
+            <div class="slds-col slds-size_1-of-4 banner-item border-left">
+                <lightning-icon icon-name="standard:document" size="small"></lightning-icon>
+                <div class="slds-m-left_x-small">
+                    <p class="slds-text-body_small slds-text-color_weak">보험 유형</p>
+                    <p class="slds-text-heading_small"><strong>{insuranceType}</strong></p>
+                </div>
+            </div>
+            <div class="slds-col slds-size_1-of-4 banner-item border-left quote-cell">
+                <div class="quote-content">
+                    <p class="slds-text-body_small quote-text">{quote}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

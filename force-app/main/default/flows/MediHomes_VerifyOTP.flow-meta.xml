@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>SetFailed</name>
+        <label>인증 실패</label>
+        <locationX>300</locationX>
+        <locationY>240</locationY>
+        <assignmentItems>
+            <assignToReference>outputIsVerified</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>outputMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>인증 코드가 올바르지 않습니다. 다시 확인해주세요.</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>SetVerified</name>
+        <label>인증 성공</label>
+        <locationX>50</locationX>
+        <locationY>240</locationY>
+        <assignmentItems>
+            <assignToReference>outputIsVerified</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>outputMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>본인 인증이 완료되었습니다.</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>CheckOTP</name>
+        <label>OTP 코드 일치 여부</label>
+        <locationX>50</locationX>
+        <locationY>120</locationY>
+        <defaultConnector>
+            <targetReference>SetFailed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>불일치</defaultConnectorLabel>
+        <rules>
+            <name>OTPMatches</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>inputUserCode</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>inputStoredCode</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetVerified</targetReference>
+            </connector>
+            <label>일치</label>
+        </rules>
+    </decisions>
+    <description>고객이 입력한 OTP 코드와 저장된 코드를 비교하여 본인 인증 여부를 반환합니다.</description>
+    <interviewLabel>MediHomes_VerifyOTP {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>메디홈즈 OTP 검증</label>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>CheckOTP</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>봇의 authenticationKey에 저장된 OTP 코드</description>
+        <name>inputStoredCode</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>고객이 입력한 OTP 코드</description>
+        <name>inputUserCode</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>인증 성공 여부</description>
+        <name>outputIsVerified</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <description>결과 안내 메시지</description>
+        <name>outputMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+</Flow>

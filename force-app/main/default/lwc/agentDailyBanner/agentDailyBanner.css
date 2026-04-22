@@ -1,0 +1,61 @@
+.banner-wrap {
+    border-radius: 0.5rem;
+    background-color: var(--slds-g-color-brand-base-95, #f3f8ff);
+    border: 1px solid var(--slds-g-color-brand-base-80, #c9daf8);
+    padding: 0.25rem 0;
+}
+
+.banner-item {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center;
+    flex-wrap: nowrap;
+    padding: 0.5rem 1rem;
+    gap: 0.5rem;
+}
+
+.banner-item lightning-icon {
+    flex-shrink: 0;
+    align-self: center;
+}
+
+.banner-item .slds-m-left_x-small {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.1rem;
+}
+
+.border-left {
+    border-left: 1px solid var(--slds-g-color-neutral-base-80, #c9c9c9);
+}
+
+.quote-cell {
+    justify-content: flex-start !important;
+    align-items: stretch !important;
+}
+
+.quote-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 100%;
+}
+
+.quote-text {
+    font-style: italic;
+    font-weight: 600;
+    color: var(--slds-g-color-neutral-base-30, #3e3e3c);
+    line-height: 1.5;
+    font-size: 0.75rem;
+    overflow: hidden;
+    display: -webkit-box;
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    text-align: left;
+    width: 100%;
+    margin: 0;
+    white-space: pre-line;
+    min-height: calc(1.5em * 3);
+}

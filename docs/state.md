@@ -5,7 +5,7 @@
 
 ---
 
-## 현재 상태 (2026-04-22)
+## 현재 상태 (2026-04-22) — 업데이트
 
 ### 완료
 - [x] Salesforce 프로젝트 생성 (MediHomes, API 66.0)
@@ -23,18 +23,37 @@
 - [x] Apex Action 2개 작성 및 배포
   - `MediHomesLookupEmailByNameDOB` — 이름+생년월일 → 이메일/전화 조회
   - `MediHomesOTPSender` — OTP 생성 + 이메일 발송
-- [x] 원정연 데모 데이터 생성
-  - Account: `001Ig00000EVfxUIAT` (기존)
-  - Contract__c 3개: 2024(만료) / 2025(만료) / 2026(활성)
+- [x] InspectionHistory__c 커스텀 필드 FLS 이슈 해결
+  - 원인: System Administrator 프로필 FLS 미설정 + PermissionSet 미assign
+  - 해결: 88개 프로필 전체 FieldPermissions 직접 부여 (Apex)
+  - PermissionSet `InspectionHistoryAccess` 생성 및 전체 사용자 assign
+- [x] 원정연 데모 데이터 생성 완료
+  - Account: `001Ig00000EVfxUIAT`
+  - Contract__c 3개: C-0004(2024 만료) / C-0005(2025 만료) / C-0006(2026 활성)
   - Asset 2개: ResMed AirSense 11 (`02iIg000000tVY3IAM`) / Philips DreamStation 2 (`02iIg000000tVY8IAM`)
-  - 병원 연결: `Hospital__c = 001Ig00000EVgeMIAT` (메디홈즈병원)
-- [x] InspectionHistory__c 커스텀 필드 6개 배포 (Deploy ID: `0AfIg000003C94oKAC`)
-  - Account__c, Asset__c, InspectionDate__c, InspectionType__c, InspectionResult__c, Inspector__c
-  - ⚠️ 데이터 삽입 미완료 → 아래 이슈 로그 참고
+  - InspectionHistory__c 3건: 2026-01-15(정기) / 2025-07-10(방문) / 2025-03-22(정기)
+  - Opportunity(처방전) 3건: 2024(`006Ig000004C29PIAS`) / 2025(`006Ig000004C29QIAS`) / 2026(`006Ig000004C29RIAS`)
+    - Layout 필드 전체 입력 완료 (Contact__c 제외)
+    - PrePrescription__c / NextPrescription__c 체인 연결 완료
+    - Contract__c.Opportunity__c 연결 완료
+- [x] Service Console용 LWC 2개 작성 및 Org 배포 완료 (Deploy ID: `0AfIg000003C953KAC`)
+  - `agentDailyBanner` — Case 레코드 상단 환자 정보 배너 (환자명/환자상태/보험유형/명언)
+    - Apex: `MediHomesPatientBannerController`
+  - `caseRelatedCases` — 동일 환자 이전 케이스 목록 (채널: 웹챗/전화/기타)
+    - Apex: `MediHomesRelatedCasesController`
+
+- [x] 대시보드/보고서 계획 확정 → `docs/dashboard-plan.md`
+  - Case 커스텀 필드 3개 배포 완료 (ProductCategory__c / InquiryType__c / CustomerSentiment__c)
+  - FLS 전체 프로필 부여 완료 (201/264건)
+  - 보고서 9개 설계 확정, 더미 데이터 400건 계획 수립
 
 ### 진행 중
-- [ ] InspectionHistory__c 데이터 삽입 (이슈 로그 참고)
-- [ ] YouTube 카드 Action (`YoutubeCardAction`) — Enhanced Chat v1 마크다운 방식
+- [ ] YouTube 링크 Action — **홀드** (설계 확정)
+  - Knowledge__kav 에 `VideoURL__c` (URL) 커스텀 필드 추가
+  - Apex Action `MediHomesKnowledgeFAQ`: userQuery → answerText + videoUrl 반환
+  - Agent Instructions: videoUrl 있으면 `[영상 보기](url)` 형식 포함
+  - YouTube URL은 플레이스홀더로 우선 입력 → 실제 URL 교체 예정
+  - ⚠️ Knowledge 아티클 임포트 완료 후 진행
 - [ ] S2 데이터 조회 Apex — 처방전 만료일, 순응 기간, Asset 조회
 - [ ] 박태원 데모 데이터 생성 (원정연과 동일한 구조)
 

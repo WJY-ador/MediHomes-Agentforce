@@ -1,0 +1,112 @@
+.case-list {
+    list-style: none;
+    margin: 0;
+    padding: 0 12px 8px;
+    max-height: 240px;
+    overflow-y: auto;
+}
+
+.case-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.channel-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f3f3f3;
+}
+
+.case-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.case-item {
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin-bottom: 6px;
+    cursor: pointer;
+    background: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    transition: background 0.15s;
+}
+
+.case-item:hover {
+    background: #f0f4ff;
+    border-color: #c9d7f8;
+}
+
+.case-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+
+.case-number {
+    font-size: 11px;
+    color: #706e6b;
+    font-weight: 600;
+}
+
+.case-subject {
+    font-size: 13px;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.status-new,
+.status-escalated,
+.status-waiting,
+.status-closed,
+.status-default {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 12px;
+    white-space: nowrap;
+}
+
+.status-new {
+    background: #d4edff;
+    color: #0070d2;
+}
+
+.status-escalated {
+    background: #fff3cd;
+    color: #b35c00;
+}
+
+.status-waiting {
+    background: #ececec;
+    color: #444;
+}
+
+.status-closed {
+    background: #d4f5d4;
+    color: #2e7d32;
+}
+
+.status-default {
+    background: #ececec;
+    color: #444;
+}
+
+.empty-state {
+    padding: 16px;
+    text-align: center;
+    color: #706e6b;
+    font-size: 13px;
+}

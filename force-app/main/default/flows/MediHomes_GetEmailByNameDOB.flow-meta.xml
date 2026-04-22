@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>LookupEmailByNameDOB</name>
+        <label>이름/생년월일로 이메일 조회 (Apex)</label>
+        <locationX>50</locationX>
+        <locationY>120</locationY>
+        <actionName>MediHomesLookupEmailByNameDOB</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>name</name>
+            <value>
+                <elementReference>inputName</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>dateOfBirth</name>
+            <value>
+                <elementReference>inputDateOfBirth</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>MediHomesLookupEmailByNameDOB</nameSegment>
+        <outputParameters>
+            <assignToReference>outputFound</assignToReference>
+            <name>found</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>outputEmail</assignToReference>
+            <name>email</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>outputMaskedEmail</assignToReference>
+            <name>maskedEmail</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>outputPhone</assignToReference>
+            <name>phone</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>outputMaskedPhone</assignToReference>
+            <name>maskedPhone</name>
+        </outputParameters>
+    </actionCalls>
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>성함과 생년월일로 고객의 이메일을 조회하고 마스킹하여 반환합니다. Agentforce 개인정보 조회 및 이관 시나리오에서 사용합니다.</description>
+    <interviewLabel>MediHomes_GetEmailByNameDOB {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>메디홈즈 이름/생년월일로 이메일 조회</label>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>LookupEmailByNameDOB</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>고객 생년월일 (예: 1990-01-15)</description>
+        <name>inputDateOfBirth</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>고객 성함</description>
+        <name>inputName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>조회된 실제 이메일 (OTP 발송 및 케이스 접수에 사용)</description>
+        <name>outputEmail</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <description>고객 조회 성공 여부</description>
+        <name>outputFound</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <description>마스킹된 이메일 (고객에게 노출용, 예: ho***@gmail.com)</description>
+        <name>outputMaskedEmail</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <description>마스킹된 전화번호 (고객 노출용, 예: 010-****-5678)</description>
+        <name>outputMaskedPhone</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <description>조회된 실제 전화번호 (내부 전달용)</description>
+        <name>outputPhone</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+</Flow>

@@ -1,0 +1,71 @@
+<template>
+    <!-- Back button -->
+    <template if:true={showBackButton}>
+        <button class="headerButton backButton" onclick={onBackButtonClick}>
+            <lightning-icon icon-name="utility:back" variant="inverse" size="x-small"></lightning-icon>
+        </button>
+    </template>
+
+    <!-- Brand area -->
+    <div class="brand-area">
+        <div class="avatar">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+                <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
+            </svg>
+        </div>
+        <div class="brand-info">
+            <span class="brand-name">메디홈즈 AI 상담</span>
+            <span class="brand-status">
+                <span class="status-dot"></span>온라인
+            </span>
+        </div>
+    </div>
+
+    <!-- Phone badge -->
+    <a class="phone-badge" href="tel:16703171">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="11" height="11">
+            <path fill-rule="evenodd" d="M2 3.5A1.5 1.5 0 0 1 3.5 2h1.148a1.5 1.5 0 0 1 1.465 1.175l.716 3.223a1.5 1.5 0 0 1-1.052 1.767l-.933.267c-.41.117-.643.555-.48.95a11.542 11.542 0 0 0 6.254 6.254c.395.163.833-.07.95-.48l.267-.933a1.5 1.5 0 0 1 1.767-1.052l3.223.716A1.5 1.5 0 0 1 18 15.352V16.5a1.5 1.5 0 0 1-1.5 1.5H15c-1.149 0-2.263-.15-3.326-.43A13.022 13.022 0 0 1 2.43 8.326 13.019 13.019 0 0 1 2 5V3.5Z" clip-rule="evenodd" />
+        </svg>
+        1670-3171
+    </a>
+
+    <!-- Header menu -->
+    <section class={menuClass}>
+        <template if:true={showMenuButton}>
+            <button class="headerButton menuButton" onclick={onMenuButtonClick}>
+                <lightning-icon icon-name="utility:threedots_vertical" variant="inverse" size="x-small"></lightning-icon>
+            </button>
+        </template>
+
+        <section class="optionsMenu slds-dropdown slds-dropdown_right slds-nubbin_top-right">
+            <ul class="slds-dropdown__list">
+                <template for:each={chatbotOptionsMenu} for:item="option">
+                    <li class="slds-dropdown__item" key={option.optionIdentifier}>
+                        <button class="chatbotMenuOption"
+                                value={option.optionIdentifier}
+                                onclick={onMenuOptionClick}>
+                            <span value={option.optionIdentifier}>{option.title}</span>
+                        </button>
+                    </li>
+                </template>
+                <li class="slds-dropdown__item">
+                    <button class="chatbotMenuOption" onclick={onEndChatClick}>
+                        <span class="slds-text-color_error">상담 종료</span>
+                    </button>
+                </li>
+            </ul>
+        </section>
+    </section>
+
+    <!-- Minimize button -->
+    <button class="headerButton minimizeButton" onclick={onMinimizeButtonClick}>
+        <lightning-icon icon-name="utility:chevrondown" variant="inverse" size="x-small"></lightning-icon>
+    </button>
+
+    <!-- Close button -->
+    <template if:true={showCloseButton}>
+        <button class="headerButton closeButton" onclick={onCloseButtonClick}>
+            <lightning-icon icon-name="utility:close" variant="inverse" size="x-small"></lightning-icon>
+        </button>
+    </template>
+</template>

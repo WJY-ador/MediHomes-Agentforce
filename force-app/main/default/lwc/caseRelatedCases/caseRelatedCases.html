@@ -1,0 +1,29 @@
+<template>
+    <lightning-card title="이전 케이스" icon-name="standard:case">
+        <template if:true={hasCases}>
+            <ul class="case-list">
+                <template for:each={cases} for:item="c">
+                    <li key={c.caseId} class="case-item" data-case-id={c.caseId} onclick={handleCaseClick}>
+                        <div class="case-row">
+                            <div class="channel-avatar">
+                                <lightning-icon icon-name={c.channelIcon} size="small"></lightning-icon>
+                            </div>
+                            <div class="case-content">
+                                <div class="case-header">
+                                    <span class="case-number">#{c.caseNumber}</span>
+                                    <span class={c.statusClass}>{c.status}</span>
+                                </div>
+                                <p class="case-subject">{c.subject}</p>
+                            </div>
+                        </div>
+                    </li>
+                </template>
+            </ul>
+        </template>
+        <template if:false={hasCases}>
+            <div class="empty-state">
+                <p>관련 케이스가 없습니다.</p>
+            </div>
+        </template>
+    </lightning-card>
+</template>
