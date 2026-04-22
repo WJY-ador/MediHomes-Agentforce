@@ -43,9 +43,32 @@
     - Apex: `MediHomesRelatedCasesController`
 
 - [x] 대시보드/보고서 계획 확정 → `docs/dashboard-plan.md`
-  - Case 커스텀 필드 3개 배포 완료 (ProductCategory__c / InquiryType__c / CustomerSentiment__c)
+  - Case 커스텀 필드 3개 (ProductCategory__c / InquiryType__c) 배포 완료
+  - CustomerSentiment__c 피클리스트 값 수정 + 배포 완료 (긍정/보통/부정/알수없음, Deploy ID: `0AfIg000003C96VKAS`)
   - FLS 전체 프로필 부여 완료 (201/264건)
   - 보고서 9개 설계 확정, 더미 데이터 400건 계획 수립
+- [x] Asset 10개 업데이트 완료
+  - AccountId = Hospital__c = 병원 (`001Ig00000EVgeMIAT`)
+  - InstallDate / PurchaseDate / UsageEndDate / Price / Contract__c 모두 채움
+  - `02iIg000000tVktIAE` 레즈메드 에어센스10 오토셋 (CPAP) → 원정연
+  - `02iIg000000tVkuIAE` 필립스 드림스테이션 오토셋 (CPAP) → 박태원
+  - `02iIg000000tVkvIAE` 레즈메드 에어미니 오토셋 (CPAP) → 김민준
+  - `02iIg000000tVkwIAE` BMC M1 미니 오토셋 (CPAP) → 원정연
+  - `02iIg000000tVkxIAE` 레즈메드 에어핏 N30i (마스크) → 박태원
+  - `02iIg000000tVkyIAE` 레즈메드 에어핏 N20 (마스크) → 김민준
+  - `02iIg000000tVkzIAE` 레즈메드 에어핏 P30i (마스크) → 원정연
+  - `02iIg000000tVl0IAE` 레즈메드 에어핏 P10 (마스크) → 박태원
+  - `02iIg000000tVl1IAE` 레즈메드 S10 열선 호스 (소모품) → 원정연
+  - `02iIg000000tVl2IAE` 레즈메드 에어미니 N20 셋업팩 (소모품) → 박태원
+- [x] Contract__c 10개 생성 완료 (scripts/apex/create_asset_contracts.apex)
+  - Hospital__c = 병원 / 렌탈 / 자동이체 / 건강보험
+  - 환자 분배: 원정연 4개 / 박태원 4개 / 김민준 2개
+- [x] 김민준 Account 필드 보완 — InsuranceType__pc=의료급여, PatientStatus__pc=순응중
+- [x] 더미 케이스 100건 생성 완료 (scripts/apex/create_dummy_cases.apex)
+  - Closed/Ai Chat: 70건 / Escalated/상담사이관: 10건 / New: 10건 / Working: 10건
+  - CustomerSentiment__c(80건) / CSAT__c(70건) / ProductCategory__c / InquiryType__c / AssetId 채움
+  - CustomerSentiment__c restricted 배포 이슈 → restricted:false 우회 후 restricted:true 복원
+- [x] develop 브랜치 커밋 완료 (55 files, d993cad)
 
 ### 진행 중
 - [ ] YouTube 링크 Action — **홀드** (설계 확정)
