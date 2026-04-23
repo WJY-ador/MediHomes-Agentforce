@@ -5,7 +5,7 @@
 
 ---
 
-## 현재 상태 (2026-04-22) — 업데이트
+## 현재 상태 (2026-04-23) — 업데이트 2
 
 ### 완료
 - [x] Salesforce 프로젝트 생성 (MediHomes, API 66.0)
@@ -82,6 +82,17 @@
   - CustomerSentiment__c(80건) / CSAT__c(70건) / ProductCategory__c / InquiryType__c / AssetId 채움
   - CustomerSentiment__c restricted 배포 이슈 → restricted:false 우회 후 restricted:true 복원
 - [x] develop 브랜치 커밋 완료 (55 files, d993cad)
+- [x] 기존 케이스 OwnerId 일괄 업데이트 — 이관 25건→김상담(005Ig000001jFfFIAU) / AI Chat 249건→EinsteinServiceAgent User(005Ig000001jG9mIAE)
+- [x] 보고서 데이터 싱크 수정 완료 (2026-04-23)
+  - Case Origin `상담사 이관` (공백) 1건 → `상담사이관` 수정 후 전체 118건 `상담사 이관` 통일
+  - R1 보고서 날짜 필터 배포 (2025-01-01 ~ 2026-12-31, Deploy ID: `0AfIg000003C9lGKAS`)
+  - R2~R9 보고서 날짜 + Origin 필터 배포 (Deploy ID: `0AfIg000003C9oyKAC`)
+  - 대시보드 `01ZIg000000TZEGMA4` 최종 확인 완료
+- [x] 더미 케이스 200건 추가 생성 완료 (scripts/apex/create_dummy_cases_v2.apex) — 총 ~401건
+  - ResMed AirSense 11: 77건 이관율 7% / Philips DreamStation 2: 53건 이관율 24%
+  - 마스크: 37건 이관율 2% / 소모품·필터: 19건 이관율 10% / 기타: 14건 이관율 21%
+  - Owner: 이관→김상담 / AI Chat→EinsteinServiceAgent User
+  - restricted picklist 우회 패턴 재사용 (CustomerSentiment__c, InquiryType__c)
 
 ### 진행 중
 - [ ] YouTube 링크 Action — **홀드** (설계 확정)

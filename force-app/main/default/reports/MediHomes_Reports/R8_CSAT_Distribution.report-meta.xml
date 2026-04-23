@@ -7,10 +7,19 @@
     <filter>
         <criteriaItems>
             <column>STATUS</column>
+            <columnToColumn>false</columnToColumn>
             <isUnlocked>true</isUnlocked>
             <operator>equals</operator>
             <value>Closed</value>
         </criteriaItems>
+        <criteriaItems>
+            <column>ORIGIN</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Ai Chat,상담사이관</value>
+        </criteriaItems>
+        <language>en_US</language>
     </filter>
     <format>Summary</format>
     <groupingsDown>
@@ -34,6 +43,8 @@
     <showSubTotals>true</showSubTotals>
     <timeFrameFilter>
         <dateColumn>CREATED_DATEONLY</dateColumn>
+        <endDate>2026-12-31</endDate>
         <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2025-01-01</startDate>
     </timeFrameFilter>
 </Report>

@@ -4,6 +4,16 @@
         <field>CASE_NUMBER</field>
     </columns>
     <currency>USD</currency>
+    <filter>
+        <criteriaItems>
+            <column>ORIGIN</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Ai Chat,상담사이관</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
     <format>Matrix</format>
     <groupingsAcross>
         <dateGranularity>Day</dateGranularity>
@@ -31,6 +41,8 @@
     <showSubTotals>true</showSubTotals>
     <timeFrameFilter>
         <dateColumn>CREATED_DATEONLY</dateColumn>
+        <endDate>2026-12-31</endDate>
         <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2025-01-01</startDate>
     </timeFrameFilter>
 </Report>
