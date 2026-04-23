@@ -5,7 +5,7 @@
 
 ---
 
-## 현재 상태 (2026-04-23) — 업데이트 2
+## 현재 상태 (2026-04-23) — 업데이트 3
 
 ### 완료
 - [x] Salesforce 프로젝트 생성 (MediHomes, API 66.0)
@@ -88,6 +88,16 @@
   - R1 보고서 날짜 필터 배포 (2025-01-01 ~ 2026-12-31, Deploy ID: `0AfIg000003C9lGKAS`)
   - R2~R9 보고서 날짜 + Origin 필터 배포 (Deploy ID: `0AfIg000003C9oyKAC`)
   - 대시보드 `01ZIg000000TZEGMA4` 최종 확인 완료
+- [x] Knowledge 아티클 16개 신규 추가 완료 (2026-04-23, scripts/apex/import_knowledge_faq.apex)
+  - 고객문의_FAQ_Ver 0.1.xlsx 기준, Org 미등록 + 답변 있는 항목만 선별
+  - 5개 필드 전부 채움: Title / Summary / faq_question__c / faq_answer__c / chat_answer__c
+  - RecordType: SDO_Knowledge_FAQ / PublishStatus: Online / ValidationStatus: Validated
+  - 총 Knowledge 아티클: 69개(기존) + 16개(신규) = 85개
+  - 답변 없어 제외된 항목(4개): 방문점검, 수면다원검사 판단법, 일반임대 계약기간, 사용시간 확인
+- [x] 보고서/대시보드 데이터 싱크 수정 완료 (2026-04-23)
+  - Case Origin 전체 통일: `상담사 이관` (공백 있음) 118건 확정
+  - 대시보드 `01ZIg000000TZEGMA4` 최종 확인 완료
+- [x] docs/knowledge-list.md 생성 완료 — Org 전체 Knowledge 아티클 목록 (카테고리별)
 - [x] 더미 케이스 200건 추가 생성 완료 (scripts/apex/create_dummy_cases_v2.apex) — 총 ~401건
   - ResMed AirSense 11: 77건 이관율 7% / Philips DreamStation 2: 53건 이관율 24%
   - 마스크: 37건 이관율 2% / 소모품·필터: 19건 이관율 10% / 기타: 14건 이관율 21%
@@ -95,18 +105,17 @@
   - restricted picklist 우회 패턴 재사용 (CustomerSentiment__c, InquiryType__c)
 
 ### 진행 중
-- [ ] YouTube 링크 Action — **홀드** (설계 확정)
+- [ ] YouTube 링크 Action — Knowledge 임포트 완료로 **진행 가능**
   - Knowledge__kav 에 `VideoURL__c` (URL) 커스텀 필드 추가
   - Apex Action `MediHomesKnowledgeFAQ`: userQuery → answerText + videoUrl 반환
   - Agent Instructions: videoUrl 있으면 `[영상 보기](url)` 형식 포함
   - YouTube URL은 플레이스홀더로 우선 입력 → 실제 URL 교체 예정
-  - ⚠️ Knowledge 아티클 임포트 완료 후 진행
 - [ ] S2 데이터 조회 Apex — 처방전 만료일, 순응 기간, Asset 조회
 - [ ] 박태원 데모 데이터 생성 (원정연과 동일한 구조)
 
 ### 미결 / 보류
 - 시나리오 3 상세 구성 → 팀 미팅 후 확정
-- Knowledge 문서 범위 결정 (전체 FAQ vs 데모용 일부)
+- Knowledge 답변 미완성 4개: 방문점검 서비스, 수면다원검사 판단법, 일반임대 계약기간, 사용시간 확인
 
 ### 블로커
 없음
